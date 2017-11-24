@@ -11,7 +11,9 @@
 #include "Library/LCD16x2.h"
 #include "Library/Key.h"
 #include "Library/Note.h"
+#include "Library/Song.h"
 #define WDT_meas_setting    (WDT_MDLY_8)
+
 
 //**********************************************************************************************************
 // Global Variables
@@ -19,9 +21,16 @@
 #define BUZZER  BIT6
 #define F_CPU   1200000L
 unsigned char dem = 0;
-const unsigned int melody[] = {NOTE_C4, NOTE_G3,NOTE_G3, NOTE_A3, NOTE_G3,0, NOTE_B3, NOTE_C4};
-const unsigned int noteDurations[] = {4, 8, 8, 4, 4, 4, 4, 4 };
+unsigned int m = 0;
+unsigned int *melody;
+unsigned int melody1[] = {NOTE_C1, NOTE_D1, NOTE_E1, NOTE_F1, NOTE_G1, NOTE_A1, NOTE_B1, NOTE_C2};
+unsigned int melody2[] = {NOTE_C2, NOTE_D2, NOTE_E2, NOTE_F2, NOTE_G2, NOTE_A2, NOTE_B2, NOTE_C3};
+unsigned int melody3[] = {NOTE_C3, NOTE_D3, NOTE_E3, NOTE_F3, NOTE_G3, NOTE_A3, NOTE_B3, NOTE_C4};
+unsigned int melody4[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_B4, NOTE_C5};
+unsigned int melody5[] = {NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
+const unsigned int noteDurations[8] = {2,2,2,2,2,2,2,2};
 volatile unsigned long count;
+
 
 //**********************************************************************************************************
 // Prototype
@@ -29,6 +38,7 @@ volatile unsigned long count;
 void base_calib(void);
 int measure_count(struct Element pad);
 void playNote(unsigned int note, unsigned int duration);
+
 
 //**********************************************************************************************************
 // Main
@@ -49,62 +59,55 @@ int main(void)
     __bis_SR_register(GIE);
     while(1)
     {
+        while(m) {
+            m--;
+            playNote(Song[m], (10000/noteDurations[m]));
+            _delay_cycles(100000);
+        }
         __delay_cycles(500000);
         delta_count = *(KEY_1.baseline) - measure_count(KEY_1);
-        if(delta_count > 100)           // If Key 1 is touched
-        {
-            playNote(melody[0], (1000/noteDurations[0]));
+        if(delta_count > 100){
+            playNote(melody[0], (10000/noteDurations[0]));
         }
 
         delta_count = *(KEY_2.baseline) - measure_count(KEY_2);
-        if(delta_count > 100)
-        {
-            playNote(melody[1], (1000/noteDurations[1]));
-            _delay_cycles(1000);
+        if(delta_count > 100){
+            playNote(melody[1], (10000/noteDurations[1]));
         }
 
         delta_count = *(KEY_3.baseline) - measure_count(KEY_3);
-        if(delta_count > 100)
-        {
-            playNote(melody[2], (1000/noteDurations[2]));
-            _delay_cycles(10000);
+        if(delta_count > 100){
+            playNote(melody[2], (10000/noteDurations[2]));
         }
 
         delta_count = *(KEY_4.baseline) - measure_count(KEY_4);
-        if(delta_count > 100)
-        {
-            playNote(melody[3], (1000/noteDurations[3]));
-            _delay_cycles(10000);
+        if(delta_count > 100){
+            playNote(melody[3], (10000/noteDurations[3]));
         }
 
         delta_count = *(KEY_5.baseline) - measure_count(KEY_5);
-        if(delta_count > 100)
-        {
-            playNote(melody[4], (1000/noteDurations[4]));
-            _delay_cycles(10000);
+        if(delta_count > 100){
+            playNote(melody[4], (10000/noteDurations[4]));
         }
+
         delta_count = *(KEY_6.baseline) - measure_count(KEY_6);
-        if(delta_count > 100)
-        {
-            playNote(melody[5], (1000/noteDurations[5]));
-            _delay_cycles(10000);
+        if(delta_count > 100){
+            playNote(melody[5], (10000/noteDurations[5]));
         }
 
         delta_count = *(KEY_7.baseline) - measure_count(KEY_7);
-        if(delta_count > 100)
-        {
-            playNote(melody[6], (1000/noteDurations[6]));
-            _delay_cycles(10000);
+        if(delta_count > 100){
+            playNote(melody[6], (10000/noteDurations[6]));
         }
 
         delta_count = *(KEY_8.baseline) - measure_count(KEY_8);
-        if(delta_count > 100)
-        {
-            playNote(melody[7], (1000/noteDurations[7]));
-            _delay_cycles(10000);
+        if(delta_count > 100){
+            playNote(melody[7], (10000/noteDurations[7]));
         }
     }
 }
+
+
 //**********************************************************************************************************
 // Program of subroutines
 //**********************************************************************************************************
@@ -112,8 +115,7 @@ int main(void)
 void base_calib(void)
 {
     char i;
-    for(i = 0; i < 8; i++)
-    {
+    for(i = 0; i < 8; i++){
         base_cap[i] = measure_count(*KEY[i]);
     }
 }
@@ -165,6 +167,7 @@ void playNote(unsigned int note, unsigned int duration)
     P1SEL &= ~BUZZER;                               // Turn off timer output to pin
 }
 
+
 //**********************************************************************************************************
 // Interrupt service routine
 //**********************************************************************************************************
@@ -184,21 +187,36 @@ __interrupt void INT(void)
     _delay_cycles(50000);
     dem++;
     PIFG_SWITCH &= ~ SWITCH;
-    if (dem == 1)
-    {
+    if (dem == 1){
+        melody = melody1;
         LCD_Clear();
         LCD_PrintString ("Song 1");
     }
-    else if (dem == 2)
-    {
+    else if (dem == 2){
+        melody = melody2;
         LCD_Clear();
         LCD_PrintString ("Song 2");
     }
-    else
-    {
+    else if (dem == 3) {
+        melody = melody3;
         LCD_Clear();
-        dem = 0;
         LCD_PrintString ("Song 3");
+    }
+    else if (dem == 4){
+        melody = melody4;
+        LCD_Clear();
+        LCD_PrintString ("Song 4");
+    }
+    else if (dem == 4){
+        melody = melody5;
+        LCD_Clear();
+        LCD_PrintString ("Song 5");
+    }
+    else {
+        dem = 0;
+        m = 4;
+        LCD_Clear();
+        LCD_PrintString ("See you again");
     }
 }
 

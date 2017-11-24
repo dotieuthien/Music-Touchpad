@@ -16,6 +16,7 @@ struct Element
     int             *baseline;    // Pointer to baseline capacitance
 };
 
+
 //**********************************************************************************************************
 // Define 8 Key for Touch-pad
 //**********************************************************************************************************
@@ -78,7 +79,7 @@ const struct Element KEY_7 =
     .Pxsel = (unsigned char *)&P2SEL,
     .Pxsel2 = (unsigned char *)&P2SEL2,
     .Pxdir = (unsigned char *)&P2DIR,
-    .inputBits = BIT6,
+    .inputBits = BIT7,
     .baseline = &base_cap[6]
 };
 
@@ -87,7 +88,7 @@ const struct Element KEY_8 =
     .Pxsel = (unsigned char *)&P2SEL,
     .Pxsel2 = (unsigned char *)&P2SEL2,
     .Pxdir = (unsigned char *)&P2DIR,
-    .inputBits = BIT7,
+    .inputBits = BIT6,
     .baseline = &base_cap[7]
 };
 
