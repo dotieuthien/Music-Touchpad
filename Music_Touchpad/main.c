@@ -23,12 +23,11 @@
 unsigned char dem = 0;
 unsigned int m = 0;
 unsigned int *melody;
-unsigned int melody1[] = {NOTE_C1, NOTE_D1, NOTE_E1, NOTE_F1, NOTE_G1, NOTE_A1, NOTE_B1, NOTE_C2};
-unsigned int melody2[] = {NOTE_C2, NOTE_D2, NOTE_E2, NOTE_F2, NOTE_G2, NOTE_A2, NOTE_B2, NOTE_C3};
-unsigned int melody3[] = {NOTE_C3, NOTE_D3, NOTE_E3, NOTE_F3, NOTE_G3, NOTE_A3, NOTE_B3, NOTE_C4};
-unsigned int melody4[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_B4, NOTE_C5};
-unsigned int melody5[] = {NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
-const unsigned int noteDurations[8] = {2,2,2,2,2,2,2,2};
+unsigned int melody1[] = {C1, D1, E1, F1, G1, A1, B1, C2};
+unsigned int melody2[] = {C2, D2, E2, F2, G2, A2, B2, C3};
+unsigned int melody3[] = {C3, D3, E3, F3, G3, A3, B3, C4};
+unsigned int melody4[] = {C4, D4, E4, F4, G4, A4, B4, C5};
+unsigned int melody5[] = {C5, D5, E5, F5, G5, A5, B5, C6};
 volatile unsigned long count;
 
 
@@ -59,50 +58,50 @@ int main(void)
     __bis_SR_register(GIE);
     while(1)
     {
-        while(m) {
-            m--;
-            playNote(Song[m], (10000/noteDurations[m]));
+        while((m <= 97)&(m>0)) {
+            playNote(Song[m-1], (5500));
+            m++;
             _delay_cycles(100000);
         }
         __delay_cycles(500000);
         delta_count = *(KEY_1.baseline) - measure_count(KEY_1);
         if(delta_count > 100){
-            playNote(melody[0], (10000/noteDurations[0]));
+            playNote(melody[0], (5000));
         }
 
         delta_count = *(KEY_2.baseline) - measure_count(KEY_2);
         if(delta_count > 100){
-            playNote(melody[1], (10000/noteDurations[1]));
+            playNote(melody[1], (5000));
         }
 
         delta_count = *(KEY_3.baseline) - measure_count(KEY_3);
         if(delta_count > 100){
-            playNote(melody[2], (10000/noteDurations[2]));
+            playNote(melody[2], (5000));
         }
 
         delta_count = *(KEY_4.baseline) - measure_count(KEY_4);
         if(delta_count > 100){
-            playNote(melody[3], (10000/noteDurations[3]));
+            playNote(melody[3], (5000));
         }
 
         delta_count = *(KEY_5.baseline) - measure_count(KEY_5);
         if(delta_count > 100){
-            playNote(melody[4], (10000/noteDurations[4]));
+            playNote(melody[4], (5000));
         }
 
         delta_count = *(KEY_6.baseline) - measure_count(KEY_6);
         if(delta_count > 100){
-            playNote(melody[5], (10000/noteDurations[5]));
+            playNote(melody[5], (5000));
         }
 
         delta_count = *(KEY_7.baseline) - measure_count(KEY_7);
         if(delta_count > 100){
-            playNote(melody[6], (10000/noteDurations[6]));
+            playNote(melody[6], (5000));
         }
 
         delta_count = *(KEY_8.baseline) - measure_count(KEY_8);
         if(delta_count > 100){
-            playNote(melody[7], (10000/noteDurations[7]));
+            playNote(melody[7], (5000));
         }
     }
 }
@@ -214,9 +213,9 @@ __interrupt void INT(void)
     }
     else {
         dem = 0;
-        m = 4;
+        m = 1;
         LCD_Clear();
-        LCD_PrintString ("See you again");
+        LCD_PrintString ("Xe Dap");
     }
 }
 

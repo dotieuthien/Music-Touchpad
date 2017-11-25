@@ -134,7 +134,7 @@ BIN_OUTPUTS__QUOTED += \
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "Music_Touchpad.out"
+	@$(MAKE) --no-print-directory -Onone "Music_Touchpad.out" secondary-outputs
 
 # Tool invocations
 Music_Touchpad.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
@@ -157,6 +157,8 @@ clean:
 	-$(RM) "main.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
+
+secondary-outputs: $(BIN_OUTPUTS)
 
 .PHONY: all clean dependents
 .SECONDARY:
