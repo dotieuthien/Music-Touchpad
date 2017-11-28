@@ -146,7 +146,7 @@ Music_Touchpad.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 
 Music_Touchpad.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: MSP430 Hex Utility'
-	"D:/CCS/ccsv7/tools/compiler/ti-cgt-msp430_16.9.3.LTS/bin/hex430" --memwidth=8 --romwidth=8 -o "Music_Touchpad.hex" $(EXE_OUTPUTS__QUOTED)
+	"D:/CCS/ccsv7/tools/compiler/ti-cgt-msp430_16.9.3.LTS/bin/hex430" --memwidth=8 --romwidth=8 --intel -o "Music_Touchpad.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 

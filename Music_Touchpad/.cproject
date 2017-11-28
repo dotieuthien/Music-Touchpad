@@ -76,7 +76,8 @@
 							<tool id="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.895124846" name="MSP430 Hex Utility" superClass="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex">
 								<option id="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.ROMWIDTH.1225198613" name="Specify rom width (--romwidth, -romwidth=width)" superClass="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.ROMWIDTH" useByScannerDiscovery="false" value="8" valueType="string"/>
 								<option id="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.MEMWIDTH.467640468" name="Specify memory width (--memwidth, -memwidth=width)" superClass="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.MEMWIDTH" useByScannerDiscovery="false" value="8" valueType="string"/>
-								<option id="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.TOOL_ENABLE.141073388" superClass="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.TOOL_ENABLE" value="true" valueType="boolean"/>
+								<option id="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.TOOL_ENABLE.141073388" name="Enable tool" superClass="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.TOOL_ENABLE" value="true" valueType="boolean"/>
+								<option id="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.OUTPUT_FORMAT.1674486738" superClass="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.OUTPUT_FORMAT" value="com.ti.ccstudio.buildDefinitions.MSP430_16.9.hex.OUTPUT_FORMAT.INTEL" valueType="enumerated"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
