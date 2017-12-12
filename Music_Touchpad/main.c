@@ -21,7 +21,7 @@
 #define BUZZER  BIT6
 #define F_CPU   1200000L
 unsigned char dem = 0;
-unsigned int m = 0;
+int m = 0;
 unsigned int *melody;
 unsigned int melody1[] = {C1, D1, E1, F1, G1, A1, B1, C2};
 unsigned int melody2[] = {C2, D2, E2, F2, G2, A2, B2, C3};
@@ -46,7 +46,7 @@ int main(void)
 {
     int delta_count;
     WDTCTL = WDTPW | WDTHOLD;           // Stop watchdog timer
-    BCSCTL1 = CALBC1_16MHZ;             // Set DCO to 1MHz
+    BCSCTL1 = CALBC1_16MHZ;             // Set DCO to 16MHz
     DCOCTL =  CALDCO_16MHZ;
     P1DIR |= BUZZER;
     Config_Switch();
@@ -187,6 +187,7 @@ __interrupt void INT(void)
     dem++;
     PIFG_SWITCH &= ~ SWITCH;
     if (dem == 1){
+        m = -1;
         melody = melody1;
         LCD_Clear();
         LCD_PrintString ("Song 1");
@@ -205,11 +206,6 @@ __interrupt void INT(void)
         melody = melody4;
         LCD_Clear();
         LCD_PrintString ("Song 4");
-    }
-    else if (dem == 4){
-        melody = melody5;
-        LCD_Clear();
-        LCD_PrintString ("Song 5");
     }
     else {
         dem = 0;
